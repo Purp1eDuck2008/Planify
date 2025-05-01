@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#324E7B</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="activic">#f8f8f8</color>
+    <color name="inactivic">#a6aece</color>
+    <color name="down">#5365ab</color>
+    //цвета для дней недели
+    <color name="inacday">#a6aece</color>
+    <color name="acday">#2d3c5f</color>
+    <color name="acdaytxt">#6684D7</color>
+
+    //начало пиздеца
+    <color name="hour_line">#B3FFFFFF</color>
+    <color name="quarter_line">#80FFFFFF</color>
+    <color name="whitetime">#2d3c5f</color>
+</resources>
