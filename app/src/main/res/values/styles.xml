@@ -1,16 +1,9 @@
 <resources>
-
-    <!-- Базовая тема с цветом статус-бара -->
-    <style name="Base.Theme.App" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Устанавливаем цвет статус-бара -->
-        <item name="android:statusBarColor">#324E7B</item>
-        <!-- Прозрачность статус-бара, если нужно -->
+    <!-- Основной стиль приложения -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Установим цвет фона для приложения -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- Прозрачный статус-бар -->
         <item name="android:windowTranslucentStatus">true</item>
-        <!-- Если хотите, чтобы иконки в статус-баре были темными -->
-        <item name="android:windowLightStatusBar">true</item>
     </style>
-
-    <!-- Основная тема приложения -->
-    <style name="Theme.App" parent="Base.Theme.App" />
-
 </resources>

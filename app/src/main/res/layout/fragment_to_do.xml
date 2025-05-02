@@ -3,15 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- RecyclerView для отображения списка задач -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/todo_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <!-- Основной контейнер -->
+    <LinearLayout
+        android:id="@+id/notes_container"
+        android:orientation="vertical"
         android:padding="16dp"
-        android:layout_alignParentTop="true"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!-- Кнопка для добавления новой задачи -->
+        <!-- Поле ввода заголовка -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Заголовок заметки"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Поле ввода содержания -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Текст заметки"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note_content_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Здесь позже можно вставить RecyclerView для списка заметок -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!-- Плавающая кнопка добавления заметки -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_note_button"
         android:layout_width="wrap_content"
