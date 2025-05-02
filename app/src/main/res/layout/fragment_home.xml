@@ -129,8 +129,6 @@
         android:layout_height="518dp"
         android:orientation="vertical">
 
-        <android.widget.ScrollView
 
-    </android.widget.ScrollView>
 </LinearLayout>
 </FrameLayout>
