@@ -10,9 +10,10 @@
     <color name="inacday">#a6aece</color>
     <color name="acday">#2d3c5f</color>
     <color name="acdaytxt">#6684D7</color>
-
     //начало пиздеца
     <color name="hour_line">#B3FFFFFF</color>
+    <color name="time_4">#95FFFFFF</color>
+    <color name="time">#FFFFFFFF</color>
     <color name="quarter_line">#80FFFFFF</color>
     <color name="whitetime">#2d3c5f</color>
 </resources>
