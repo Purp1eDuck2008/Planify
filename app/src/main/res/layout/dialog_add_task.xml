@@ -115,21 +115,21 @@
                 android:id="@+id/rb_permanent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Перманентная"
+                android:text="Неизменные"
                 app:buttonTint="?attr/colorPrimary"/>
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rb_semi_permanent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Полуперманентная"
+                android:text="Запланированные"
                 app:buttonTint="?attr/colorPrimary"/>
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/rb_variable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Вариативная"
+                android:text="Эпизодные"
                 app:buttonTint="?attr/colorPrimary"/>
         </RadioGroup>
     <TextView

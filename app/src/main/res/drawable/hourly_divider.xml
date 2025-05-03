@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:top="0dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="80dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="160dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="240dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="320dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="400dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="480dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="560dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="640dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="720dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="800dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="880dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="960dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1040dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1120dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1200dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1280dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1360dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1440dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1520dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1600dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1680dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1760dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1840dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+    <item android:top="1920dp"><shape><size android:height="1dp"/><solid android:color="#D1B3FF"/></shape></item>
+</layer-list>

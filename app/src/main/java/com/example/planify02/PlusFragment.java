@@ -5,15 +5,17 @@ import android.app.TimePickerDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
+import java.util.ArrayList;
+import java.util.Date;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.room.Room;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.planify02.database.AppDatabase;
 import com.example.planify02.entities.PlanItem;
@@ -25,7 +27,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -36,22 +39,18 @@ public class PlusFragment extends Fragment {
 
     private AppDatabase db;
     private ViewGroup tasksContainer;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", new Locale("ru"));
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plus, container, false);
 
-        // Фиксируем портретную ориентацию
         requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        // Инициализация базы данных
-        db = Room.databaseBuilder(requireContext(),
-                        AppDatabase.class, "planify-database")
-                .allowMainThreadQueries()
-                .build();
-
+        db = AppDatabase.getInstance(requireContext());
         tasksContainer = view.findViewById(R.id.tasks_container);
+
         loadTasksFromDatabase();
 
         MaterialButton addTaskButton = view.findViewById(R.id.add_task_button);
@@ -63,23 +62,30 @@ public class PlusFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // Восстанавливаем стандартную ориентацию при уничтожении фрагмента
         requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        if (db != null) {
-            db.close();
-        }
     }
 
     private void loadTasksFromDatabase() {
+        if (tasksContainer == null) return;
+
         tasksContainer.removeAllViews();
-        // Получаем задачи, уже отсортированные в БД
-        List<PlanItem> tasks = db.planItemDao().getAllSortedByType();
-        for (PlanItem task : tasks) {
-            addTaskCard(task);
-        }
+        new Thread(() -> {
+            try {
+                List<PlanItem> tasks = db.planItemDao().getAllSortedByType();
+                requireActivity().runOnUiThread(() -> {
+                    for (PlanItem task : tasks) {
+                        addTaskCard(task);
+                    }
+                });
+            } catch (Exception e) {
+                Log.e("PlusFragment", "Error loading tasks", e);
+            }
+        }).start();
     }
 
     private void addTaskCard(PlanItem task) {
+        if (!isAdded() || tasksContainer == null) return;
+
         MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(requireContext())
                 .inflate(R.layout.task_card_item, tasksContainer, false);
 
@@ -123,13 +129,13 @@ public class PlusFragment extends Fragment {
 
         for (String code : dayCodes) {
             try {
-                int index = Integer.parseInt(code) - 1;
+                int index = Integer.parseInt(code.trim()) - 1;
                 if (index >= 0 && index < dayNames.length) {
                     if (result.length() > 8) result.append(", ");
                     result.append(dayNames[index]);
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                Log.e("PlusFragment", "Error parsing repeat days", e);
             }
         }
         return result.toString();
@@ -141,17 +147,24 @@ public class PlusFragment extends Fragment {
                 .setDuration(200)
                 .withEndAction(() -> {
                     new Thread(() -> {
-                        db.planItemDao().delete(task);
-                        requireActivity().runOnUiThread(() -> {
-                            tasksContainer.removeView(cardView);
-                            showToast("Задача удалена");
-                        });
+                        try {
+                            db.planItemDao().delete(task);
+                            requireActivity().runOnUiThread(() -> {
+                                tasksContainer.removeView(cardView);
+                                showToast("Задача удалена");
+                                updateHomeFragment();
+                            });
+                        } catch (Exception e) {
+                            Log.e("PlusFragment", "Error deleting task", e);
+                        }
                     }).start();
                 })
                 .start();
     }
 
     private void showTaskDialog(PlanItem existingTask) {
+        if (!isAdded()) return;
+
         View dialogView = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_add_task, null);
 
@@ -171,64 +184,6 @@ public class PlusFragment extends Fragment {
 
         setupDateTimePickers(etEventDate, etStartTime, etEndTime);
 
-        MaterialAlertDialogBuilder builder = createDialogBuilder(existingTask, dialogView,
-                etTitle, etEventDate, etStartTime, etEndTime,
-                etLocation, etDescription, rgTaskType, chipGroupDays);
-
-        builder.show();
-    }
-
-    private void fillDialogFields(PlanItem task, TextInputEditText etTitle,
-                                  TextInputEditText etEventDate, TextInputEditText etStartTime,
-                                  TextInputEditText etEndTime, TextInputEditText etLocation,
-                                  TextInputEditText etDescription, RadioGroup rgTaskType,
-                                  ChipGroup chipGroupDays) {
-        etTitle.setText(task.getTitle());
-        etEventDate.setText(task.getEventDate());
-        etStartTime.setText(task.getStartTime());
-        etEndTime.setText(task.getEndTime());
-        etLocation.setText(task.getLocation());
-        etDescription.setText(task.getDescription());
-
-        switch (task.getTaskType()) {
-            case "Перманентная": rgTaskType.check(R.id.rb_permanent); break;
-            case "Полуперманентная": rgTaskType.check(R.id.rb_semi_permanent); break;
-            case "Вариативная": rgTaskType.check(R.id.rb_variable); break;
-        }
-
-        if (task.getRepeatDays() != null && !task.getRepeatDays().isEmpty()) {
-            String[] days = task.getRepeatDays().split(",");
-            for (String day : days) {
-                switch (day) {
-                    case "1": chipGroupDays.check(R.id.chipMonday); break;
-                    case "2": chipGroupDays.check(R.id.chipTuesday); break;
-                    case "3": chipGroupDays.check(R.id.chipWednesday); break;
-                    case "4": chipGroupDays.check(R.id.chipThursday); break;
-                    case "5": chipGroupDays.check(R.id.chipFriday); break;
-                    case "6": chipGroupDays.check(R.id.chipSaturday); break;
-                    case "7": chipGroupDays.check(R.id.chipSunday); break;
-                }
-            }
-        }
-    }
-
-    private void setupDateTimePickers(TextInputEditText etEventDate,
-                                      TextInputEditText etStartTime,
-                                      TextInputEditText etEndTime) {
-        etEventDate.setOnClickListener(v -> showDatePicker(etEventDate));
-        etStartTime.setOnClickListener(v -> showTimePicker(etStartTime, "Время начала"));
-        etEndTime.setOnClickListener(v -> showTimePicker(etEndTime, "Время окончания"));
-    }
-
-    private MaterialAlertDialogBuilder createDialogBuilder(PlanItem existingTask, View dialogView,
-                                                           TextInputEditText etTitle,
-                                                           TextInputEditText etEventDate,
-                                                           TextInputEditText etStartTime,
-                                                           TextInputEditText etEndTime,
-                                                           TextInputEditText etLocation,
-                                                           TextInputEditText etDescription,
-                                                           RadioGroup rgTaskType,
-                                                           ChipGroup chipGroupDays) {
         Map<Integer, String> dayMap = createDayMap();
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
@@ -238,6 +193,7 @@ public class PlusFragment extends Fragment {
                     if (validateAndSaveTask(existingTask, etTitle, etEventDate, etStartTime,
                             etEndTime, etLocation, etDescription, rgTaskType, chipGroupDays, dayMap)) {
                         loadTasksFromDatabase();
+                        updateHomeFragment();
                     }
                 })
                 .setNegativeButton("Отмена", null);
@@ -245,16 +201,87 @@ public class PlusFragment extends Fragment {
         if (existingTask != null) {
             builder.setNeutralButton("Удалить", (dialog, which) -> {
                 new Thread(() -> {
-                    db.planItemDao().delete(existingTask);
-                    requireActivity().runOnUiThread(() -> {
-                        loadTasksFromDatabase();
-                        showToast("Задача удалена");
-                    });
+                    try {
+                        db.planItemDao().delete(existingTask);
+                        requireActivity().runOnUiThread(() -> {
+                            showToast("Задача удалена");
+                            loadTasksFromDatabase();
+                            updateHomeFragment();
+                        });
+                    } catch (Exception e) {
+                        Log.e("PlusFragment", "Error deleting task", e);
+                    }
                 }).start();
             });
         }
 
-        return builder;
+        builder.show();
+    }
+
+    private void fillDialogFields(PlanItem task, TextInputEditText etTitle,
+                                  TextInputEditText etEventDate, TextInputEditText etStartTime,
+                                  TextInputEditText etEndTime, TextInputEditText etLocation,
+                                  TextInputEditText etDescription, RadioGroup rgTaskType,
+                                  ChipGroup chipGroupDays) {
+        try {
+            etTitle.setText(task.getTitle());
+            etEventDate.setText(task.getEventDate());
+            etStartTime.setText(task.getStartTime());
+            etEndTime.setText(task.getEndTime());
+            etLocation.setText(task.getLocation());
+            etDescription.setText(task.getDescription());
+
+            switch (task.getTaskType()) {
+                case "Неизменные":
+                    rgTaskType.check(R.id.rb_permanent);
+                    break;
+                case "Запланированные":
+                    rgTaskType.check(R.id.rb_semi_permanent);
+                    break;
+                case "Эпизодные":
+                    rgTaskType.check(R.id.rb_variable);
+                    break;
+            }
+
+            if (task.getRepeatDays() != null && !task.getRepeatDays().isEmpty()) {
+                String[] days = task.getRepeatDays().split(",");
+                for (String day : days) {
+                    switch (day.trim()) {
+                        case "1":
+                            chipGroupDays.check(R.id.chipMonday);
+                            break;
+                        case "2":
+                            chipGroupDays.check(R.id.chipTuesday);
+                            break;
+                        case "3":
+                            chipGroupDays.check(R.id.chipWednesday);
+                            break;
+                        case "4":
+                            chipGroupDays.check(R.id.chipThursday);
+                            break;
+                        case "5":
+                            chipGroupDays.check(R.id.chipFriday);
+                            break;
+                        case "6":
+                            chipGroupDays.check(R.id.chipSaturday);
+                            break;
+                        case "7":
+                            chipGroupDays.check(R.id.chipSunday);
+                            break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("PlusFragment", "Error filling dialog fields", e);
+        }
+    }
+
+    private void setupDateTimePickers(TextInputEditText etEventDate,
+                                      TextInputEditText etStartTime,
+                                      TextInputEditText etEndTime) {
+        etEventDate.setOnClickListener(v -> showDatePicker(etEventDate));
+        etStartTime.setOnClickListener(v -> showTimePicker(etStartTime, "Время начала"));
+        etEndTime.setOnClickListener(v -> showTimePicker(etEndTime, "Время окончания"));
     }
 
     private Map<Integer, String> createDayMap() {
@@ -274,24 +301,112 @@ public class PlusFragment extends Fragment {
                                         TextInputEditText etEndTime, TextInputEditText etLocation,
                                         TextInputEditText etDescription, RadioGroup rgTaskType,
                                         ChipGroup chipGroupDays, Map<Integer, String> dayMap) {
-        String title = etTitle.getText().toString().trim();
-        String eventDate = etEventDate.getText().toString().trim();
-        String startTime = etStartTime.getText().toString().trim();
-        String endTime = etEndTime.getText().toString().trim();
-        String location = etLocation.getText().toString().trim();
-        String description = etDescription.getText().toString().trim();
-        String taskType = getSelectedTaskType(rgTaskType);
+        try {
+            String title = etTitle.getText().toString().trim();
+            String eventDate = etEventDate.getText().toString().trim();
+            String startTime = etStartTime.getText().toString().trim();
+            String endTime = etEndTime.getText().toString().trim();
+            String location = etLocation.getText().toString().trim();
+            String description = etDescription.getText().toString().trim();
+            String taskType = getSelectedTaskType(rgTaskType);
 
-        List<String> selectedDays = getSelectedDays(chipGroupDays, dayMap);
-        String repeatDays = TextUtils.join(",", selectedDays);
+            List<String> selectedDays = getSelectedDays(chipGroupDays, dayMap);
+            String repeatDays = TextUtils.join(",", selectedDays);
 
-        if (!validateInput(title, eventDate, startTime, endTime, taskType)) {
+            if (!validateInput(etTitle, etEventDate, etStartTime, etEndTime, rgTaskType)) {
+                return false;
+            }
+
+            saveOrUpdateTask(existingTask, title, eventDate, startTime, endTime,
+                    location, description, taskType, repeatDays);
+            return true;
+        } catch (Exception e) {
+            Log.e("PlusFragment", "Error saving task", e);
+            showToast("Ошибка сохранения задачи");
             return false;
         }
+    }
 
-        saveOrUpdateTask(existingTask, title, eventDate, startTime, endTime,
-                location, description, taskType, repeatDays);
-        return true;
+    private boolean validateInput(TextInputEditText etTitle, TextInputEditText etEventDate,
+                                  TextInputEditText etStartTime, TextInputEditText etEndTime,
+                                  RadioGroup rgTaskType) {
+        boolean isValid = true;
+
+        if (etTitle.getText().toString().trim().isEmpty()) {
+            etTitle.setError("Введите название задачи");
+            isValid = false;
+        } else {
+            etTitle.setError(null);
+        }
+
+        if (etEventDate.getText().toString().trim().isEmpty()) {
+            etEventDate.setError("Выберите дату события");
+            isValid = false;
+        } else {
+            etEventDate.setError(null);
+        }
+
+        if (etStartTime.getText().toString().trim().isEmpty()) {
+            etStartTime.setError("Выберите время начала");
+            isValid = false;
+        } else {
+            etStartTime.setError(null);
+        }
+
+        if (etEndTime.getText().toString().trim().isEmpty()) {
+            etEndTime.setError("Выберите время окончания");
+            isValid = false;
+        } else {
+            etEndTime.setError(null);
+        }
+
+        if (rgTaskType.getCheckedRadioButtonId() == -1) {
+            showToast("Выберите тип задачи");
+            isValid = false;
+        }
+
+        if (isValid) {
+            try {
+                String startTime = etStartTime.getText().toString().trim();
+                String endTime = etEndTime.getText().toString().trim();
+
+                if (parseTimeToMinutes(startTime) >= parseTimeToMinutes(endTime)) {
+                    etEndTime.setError("Время окончания должно быть позже времени начала");
+                    isValid = false;
+                } else {
+                    etEndTime.setError(null);
+                }
+            } catch (ParseException e) {
+                etEndTime.setError("Некорректный формат времени");
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    private int parseTimeToMinutes(String time) throws ParseException {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("h:mma", Locale.US);
+            Date date = sdf.parse(time);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            return cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
+        } catch (ParseException e) {
+            try {
+                String[] parts = time.split(":");
+                int hours = Integer.parseInt(parts[0]);
+                int minutes = Integer.parseInt(parts[1].substring(0, 2));
+                String ampm = parts[1].substring(2).toUpperCase();
+
+                if (ampm.equals("PM") && hours != 12) hours += 12;
+                if (ampm.equals("AM") && hours == 12) hours = 0;
+
+                return hours * 60 + minutes;
+            } catch (Exception ex) {
+                throw new ParseException("Invalid time format: " + time, 0);
+            }
+        }
     }
 
     private List<String> getSelectedDays(ChipGroup chipGroupDays, Map<Integer, String> dayMap) {
@@ -309,43 +424,41 @@ public class PlusFragment extends Fragment {
                                   String startTime, String endTime, String location,
                                   String description, String taskType, String repeatDays) {
         new Thread(() -> {
-            if (existingTask != null) {
-                existingTask.setTitle(title);
-                existingTask.setEventDate(date);
-                existingTask.setStartTime(startTime);
-                existingTask.setEndTime(endTime);
-                existingTask.setLocation(location);
-                existingTask.setDescription(description);
-                existingTask.setTaskType(taskType);
-                existingTask.setRepeatDays(repeatDays);
-                db.planItemDao().update(existingTask);
-            } else {
-                PlanItem newTask = new PlanItem(title, date, startTime, endTime,
-                        location, description, taskType, repeatDays);
-                db.planItemDao().insert(newTask);
-            }
+            try {
+                if (existingTask != null) {
+                    existingTask.setTitle(title);
+                    existingTask.setEventDate(date);
+                    existingTask.setStartTime(startTime);
+                    existingTask.setEndTime(endTime);
+                    existingTask.setLocation(location);
+                    existingTask.setDescription(description);
+                    existingTask.setTaskType(taskType);
+                    existingTask.setRepeatDays(repeatDays);
+                    db.planItemDao().update(existingTask);
+                } else {
+                    PlanItem newTask = new PlanItem(title, date, startTime, endTime,
+                            location, description, taskType, repeatDays);
+                    db.planItemDao().insert(newTask);
+                }
 
-            requireActivity().runOnUiThread(() ->
-                    showToast("Задача сохранена"));
+                requireActivity().runOnUiThread(() -> {
+                    showToast("Задача сохранена");
+                    updateHomeFragment();
+                });
+            } catch (Exception e) {
+                Log.e("PlusFragment", "Error saving task", e);
+                requireActivity().runOnUiThread(() ->
+                        showToast("Ошибка сохранения задачи"));
+            }
         }).start();
     }
 
     private String getSelectedTaskType(RadioGroup radioGroup) {
         int selectedId = radioGroup.getCheckedRadioButtonId();
-        if (selectedId == R.id.rb_permanent) return "Перманентная";
-        if (selectedId == R.id.rb_semi_permanent) return "Полуперманентная";
-        if (selectedId == R.id.rb_variable) return "Вариативная";
+        if (selectedId == R.id.rb_permanent) return "Неизменные";
+        if (selectedId == R.id.rb_semi_permanent) return "Запланированные";
+        if (selectedId == R.id.rb_variable) return "Эпизодные";
         return "";
-    }
-
-    private boolean validateInput(String title, String date, String startTime,
-                                  String endTime, String taskType) {
-        if (title.isEmpty()) return !showToast("Введите название задачи");
-        if (date.isEmpty()) return !showToast("Выберите дату события");
-        if (startTime.isEmpty()) return !showToast("Выберите время начала");
-        if (endTime.isEmpty()) return !showToast("Выберите время окончания");
-        if (taskType.isEmpty()) return !showToast("Выберите тип задачи");
-        return true;
     }
 
     private void showDatePicker(TextInputEditText editText) {
@@ -383,8 +496,21 @@ public class PlusFragment extends Fragment {
         return months[month];
     }
 
-    private boolean showToast(String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-        return false;
+    private void showToast(String message) {
+        if (isAdded() && getContext() != null) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateHomeFragment() {
+        if (!isAdded()) return;
+
+        FragmentManager fragmentManager = getParentFragmentManager();
+        if (fragmentManager != null) {
+            HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentByTag("home_fragment");
+            if (homeFragment != null && homeFragment.isAdded()) {
+                homeFragment.loadTasksForSelectedDate();
+            }
+        }
     }
 }

@@ -21,10 +21,11 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.LiveData;
-
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 public class ToDoFragment extends Fragment {
 
-    private EditText noteTitleInput, noteContentInput;
+    private TextInputEditText noteTitleInput, noteContentInput;
     private MaterialButton addNoteButton;
     private RecyclerView recyclerView;
     private NotesAdapter adapter;
@@ -35,27 +36,30 @@ public class ToDoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_to_do, container, false);
 
-        // Инициализация элементов
+        // Инициализация элементов с правильными типами
         noteTitleInput = view.findViewById(R.id.note_title_input);
         noteContentInput = view.findViewById(R.id.note_content_input);
         addNoteButton = view.findViewById(R.id.add_note_button);
-
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Инициализация Room
-        db = Room.databaseBuilder(requireContext(), AppDatabase.class, "notes-db")
-                .allowMainThreadQueries()
+        // Настройка RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setHasFixedSize(true);
+
+        // Инициализация базы данных
+        db = Room.databaseBuilder(requireContext(),
+                        AppDatabase.class, "notes-db")
+                .fallbackToDestructiveMigration()
                 .build();
 
-        // Инициализация адаптера с передачей слушателя
-        adapter = new NotesAdapter(new ArrayList<Note>(), note -> deleteNote(note)); // Передаем список заметок и слушатель
+        // Инициализация адаптера
+        adapter = new NotesAdapter(new ArrayList<>(), this::deleteNote);
         recyclerView.setAdapter(adapter);
 
         // Загрузка заметок
         loadNotes();
 
-        // Обработчик кнопки добавления заметки
+        // Обработчик кнопки добавления
         addNoteButton.setOnClickListener(v -> addNote());
 
         return view;
@@ -63,7 +67,9 @@ public class ToDoFragment extends Fragment {
 
     private void loadNotes() {
         db.noteDao().getAllNotes().observe(getViewLifecycleOwner(), notes -> {
-            adapter.setNotes(notes);
+            if (notes != null) {
+                adapter.setNotes(notes);
+            }
         });
     }
 
@@ -71,31 +77,27 @@ public class ToDoFragment extends Fragment {
         String title = noteTitleInput.getText().toString().trim();
         String content = noteContentInput.getText().toString().trim();
 
-        if (title.isEmpty() || content.isEmpty()) {
-            Toast.makeText(getContext(), "Заполните все поля!", Toast.LENGTH_SHORT).show();
+        if (title.isEmpty()) {
+            Toast.makeText(requireContext(), "Введите заголовок!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Note note = new Note(title, content, System.currentTimeMillis());
 
-        // Сохранение заметки в базу данных
         Executors.newSingleThreadExecutor().execute(() -> {
             db.noteDao().insert(note);
             requireActivity().runOnUiThread(() -> {
-                Toast.makeText(getContext(), "Заметка сохранена!", Toast.LENGTH_SHORT).show();
                 noteTitleInput.setText("");
                 noteContentInput.setText("");
+                noteTitleInput.requestFocus();
             });
         });
     }
 
     private void deleteNote(Note note) {
-        // Удаление заметки из базы данных
         Executors.newSingleThreadExecutor().execute(() -> {
-            db.noteDao().delete(note);  // Метод delete() должен быть в Dao
-            requireActivity().runOnUiThread(() -> {
-                Toast.makeText(getContext(), "Заметка удалена!", Toast.LENGTH_SHORT).show();
-            });
+            db.noteDao().delete(note);
         });
     }
 }
+

@@ -9,15 +9,16 @@ public class PlanItem {
     private int id;
     private String title;
     private String eventDate;  // Формат: "8 мая 2025"
-    private String startTime;  // Формат: "8:00AM"
+    private String startTime;  // Формат: "8:00AM" - используется для сортировки
     private String endTime;    // Формат: "2:00PM"
     private String location;
     private String description;
-    private String taskType;
-    private String repeatDays;
+    private String taskType;   // Тип задачи: "Перманентная", "Полуперманентная", "Вариативная"
+    private String repeatDays; // Дни повторения через запятую: "1,3,5" (Пн,Ср,Пт)
 
     public PlanItem(String title, String eventDate, String startTime,
-                    String endTime, String location, String description, String taskType, String repeatDays) {
+                    String endTime, String location, String description,
+                    String taskType, String repeatDays) {
         this.title = title;
         this.eventDate = eventDate;
         this.startTime = startTime;
@@ -26,7 +27,6 @@ public class PlanItem {
         this.description = description;
         this.taskType = taskType;
         this.repeatDays = repeatDays;
-
     }
 
     // Геттеры
@@ -62,7 +62,11 @@ public class PlanItem {
         return taskType;
     }
 
-    // Сеттеры (Room использует их для работы)
+    public String getRepeatDays() {
+        return repeatDays;
+    }
+
+    // Сеттеры
     public void setId(int id) {
         this.id = id;
     }
@@ -95,16 +99,35 @@ public class PlanItem {
         this.taskType = taskType;
     }
 
-    // Дополнительные методы для удобства работы
+    public void setRepeatDays(String repeatDays) {
+        this.repeatDays = repeatDays;
+    }
+
+    // Дополнительные методы
     public String getFullStartDateTime() {
-        return eventDate + " " + startTime;
+        return String.format("%s %s", eventDate, startTime);
     }
 
     public String getFullEndDateTime() {
-        return eventDate + " " + endTime;
+        return String.format("%s %s", eventDate, endTime);
     }
-    public String getRepeatDays() { return repeatDays; }
-    public void setRepeatDays(String repeatDays) { this.repeatDays = repeatDays; }
+
+    public String getTimeRange() {
+        return String.format("%s - %s", startTime, endTime);
+    }
+
+    /**
+     * Проверяет, повторяется ли задача в указанный день недели
+     * @param dayNumber номер дня недели (1-7)
+     * @return true если задача повторяется в этот день
+     */
+    public boolean repeatsOnDay(int dayNumber) {
+        if (repeatDays == null || repeatDays.isEmpty()) {
+            return false;
+        }
+        String dayStr = String.valueOf(dayNumber);
+        return repeatDays.contains(dayStr);
+    }
 
     @Override
     public String toString() {

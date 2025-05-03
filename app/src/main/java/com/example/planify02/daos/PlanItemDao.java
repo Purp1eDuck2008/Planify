@@ -15,6 +15,8 @@ public interface PlanItemDao {
     @Query("SELECT * FROM plan_items ORDER BY id DESC")
     List<PlanItem> getAll();
 
+    @Query("SELECT * FROM plan_items WHERE repeatDays LIKE '%' || :day || '%'")
+    List<PlanItem> getTasksByDay(int day);
     @Insert
     void insert(PlanItem planItem);
 
@@ -25,9 +27,9 @@ public interface PlanItemDao {
     void update(PlanItem planItem);
 
     @Query("SELECT * FROM plan_items ORDER BY " +
-            "CASE WHEN taskType = 'Перманентная' THEN 1 " +
-            "     WHEN taskType = 'Полуперманентная' THEN 2 " +
-            "     WHEN taskType = 'Вариативная' THEN 3 " +
+            "CASE WHEN taskType = 'Неизменные' THEN 1 " +
+            "     WHEN taskType = 'Запланированные' THEN 2 " +
+            "     WHEN taskType = 'Эпизодные' THEN 3 " +
             "     ELSE 4 END")
     List<PlanItem> getAllSortedByType();
 

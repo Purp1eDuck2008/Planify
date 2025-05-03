@@ -11,9 +11,22 @@
     <color name="acday">#2d3c5f</color>
     <color name="acdaytxt">#6684D7</color>
     //начало пиздеца
+    <color name="timeline_line">#80FFFFFF</color>
     <color name="hour_line">#B3FFFFFF</color>
     <color name="time_4">#95FFFFFF</color>
     <color name="time">#FFFFFFFF</color>
     <color name="quarter_line">#80FFFFFF</color>
     <color name="whitetime">#2d3c5f</color>
+    <color name="primary_text">#DE000000</color> <!-- 87% черного -->
+    <color name="secondary_text">#8A000000</color> <!-- 54% черного -->
+
+    <!-- Цвета задач -->
+    <color name="permanent_task">#E3F2FD</color> <!-- Light blue -->
+    <color name="semi_permanent_task">#E8F5E9</color> <!-- Light green -->
+    <color name="variable_task">#FFF3E0</color> <!-- Light orange -->
+    <color name="default_task">#F5F5F5</color> <!-- Light gray -->
+    <color name="timeline_background">#F5F0FF</color>
+    <color name="hour_marker_background">#E6D6FF</color>
+    <color name="hour_text">#6A0DAD</color>
+    <color name="divider_line">#D1B3FF</color>
 </resources>
