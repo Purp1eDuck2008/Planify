@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 00:00 (12 AM) -->
+    <item android:top="0dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 01:00 (1 AM) -->
+    <item android:top="60dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 02:00 (2 AM) -->
+    <item android:top="120dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 03:00 (3 AM) -->
+    <item android:top="180dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 04:00 (4 AM) -->
+    <item android:top="240dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 05:00 (5 AM) -->
+    <item android:top="300dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 06:00 (6 AM) -->
+    <item android:top="360dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 07:00 (7 AM) -->
+    <item android:top="420dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 08:00 (8 AM) -->
+    <item android:top="480dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 09:00 (9 AM) -->
+    <item android:top="540dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 10:00 (10 AM) -->
+    <item android:top="600dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 11:00 (11 AM) -->
+    <item android:top="660dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 12:00 (12 PM) -->
+    <item android:top="720dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 13:00 (1 PM) -->
+    <item android:top="780dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 14:00 (2 PM) -->
+    <item android:top="840dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 15:00 (3 PM) -->
+    <item android:top="900dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 16:00 (4 PM) -->
+    <item android:top="960dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 17:00 (5 PM) -->
+    <item android:top="1020dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 18:00 (6 PM) -->
+    <item android:top="1080dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 19:00 (7 PM) -->
+    <item android:top="1140dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 20:00 (8 PM) -->
+    <item android:top="1200dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 21:00 (9 PM) -->
+    <item android:top="1260dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 22:00 (10 PM) -->
+    <item android:top="1320dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- 23:00 (11 PM) -->
+    <item android:top="1380dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+
+    <!-- Последняя линия внизу (24:00) -->
+    <item android:top="1439dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/black"/>
+            <size android:height="1dp"/>
+        </shape>
+    </item>
+</layer-list>

@@ -125,8 +125,13 @@ public class PlanItem {
         if (repeatDays == null || repeatDays.isEmpty()) {
             return false;
         }
-        String dayStr = String.valueOf(dayNumber);
-        return repeatDays.contains(dayStr);
+        String[] days = repeatDays.split(",");
+        for (String day : days) {
+            if (day.trim().equals(String.valueOf(dayNumber))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -143,4 +148,6 @@ public class PlanItem {
                 ", repeatDays='" + repeatDays + '\'' +
                 '}';
     }
+
+
 }

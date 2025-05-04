@@ -461,27 +461,19 @@ public class PlusFragment extends Fragment {
         return "";
     }
 
-    private void showDatePicker(TextInputEditText editText) {
-        Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(requireContext(),
-                (view, year, month, dayOfMonth) -> editText.setText(
-                        String.format(Locale.getDefault(), "%d %s %d",
-                                dayOfMonth, getMonthName(month), year)),
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH))
-                .show();
-    }
+
 
     private void showTimePicker(TextInputEditText editText, String title) {
         Calendar calendar = Calendar.getInstance();
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 requireContext(),
                 (view, hourOfDay, minute) -> {
+                    // Конвертируем в 12-часовой формат
+                    int hour = hourOfDay % 12;
+                    if (hour == 0) hour = 12;
                     String amPm = hourOfDay < 12 ? "AM" : "PM";
-                    int hour = hourOfDay > 12 ? hourOfDay - 12 : hourOfDay;
                     editText.setText(String.format(Locale.getDefault(),
-                            "%d:%02d%s", hour == 0 ? 12 : hour, minute, amPm));
+                            "%d:%02d%s", hour, minute, amPm));
                 },
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
@@ -513,4 +505,36 @@ public class PlusFragment extends Fragment {
             }
         }
     }
+    private void showDatePicker(TextInputEditText editText) {
+        Calendar calendar = Calendar.getInstance();
+        new DatePickerDialog(requireContext(),
+                (view, year, month, dayOfMonth) -> {
+                    // Форматируем дату для отображения
+                    String formattedDate = String.format(Locale.getDefault(),
+                            "%d %s %d", dayOfMonth, getMonthName(month), year);
+                    editText.setText(formattedDate);
+
+                    // Обновляем HomeFragment
+                    updateHomeFragmentWithDate(year, month, dayOfMonth);
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    private void updateHomeFragmentWithDate(int year, int month, int dayOfMonth) {
+        if (!isAdded()) return;
+
+        FragmentManager fragmentManager = getParentFragmentManager();
+        if (fragmentManager != null) {
+            HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentByTag("home_fragment");
+            if (homeFragment != null && homeFragment.isAdded()) {
+                homeFragment.updateSelectedDateWithCalendar(year, month, dayOfMonth);
+            }
+        }
+    }
+
+
+
 }
