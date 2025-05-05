@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#324E7B</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#BBBBBBBB</color>
     <color name="white">#FFFFFFFF</color>
     <color name="activic">#f8f8f8</color>
     <color name="inactivic">#a6aece</color>
@@ -15,6 +15,7 @@
     <color name="hour_line">#B3FFFFFF</color>
     <color name="time_4">#95FFFFFF</color>
     <color name="time">#FFFFFFFF</color>
+    <color name="red1">#DD8375</color>
     <color name="quarter_line">#80FFFFFF</color>
     <color name="whitetime">#2d3c5f</color>
     <color name="primary_text">#DE000000</color> <!-- 87% черного -->

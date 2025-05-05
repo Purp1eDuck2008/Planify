@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#6A0DAD"
         android:elevation="4dp">
 
         <HorizontalScrollView
@@ -33,8 +32,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Пн"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
                     app:cornerRadius="16dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -44,8 +41,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Вт"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
                     app:cornerRadius="16dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -55,8 +50,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Ср"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
                     app:cornerRadius="16dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -66,8 +59,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Чт"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
                     app:cornerRadius="16dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -77,8 +68,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Пт"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
                     app:cornerRadius="16dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -88,8 +77,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Сб"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
                     app:cornerRadius="16dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -98,8 +85,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Вс"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
                     app:cornerRadius="16dp"/>
             </LinearLayout>
         </HorizontalScrollView>
@@ -124,34 +109,33 @@
                 android:layout_width="60dp"
                 android:layout_height="1440dp"
                 android:layout_alignParentStart="true"
-                android:orientation="vertical"
-                android:background="#E6D6FF">
+                android:orientation="vertical">
 
                 <!-- Полная часовая разметка -->
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="12 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="1 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="2 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="3 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="4 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="5 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="6 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="7 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="8 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="9 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="10 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="11 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="12 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="1 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="2 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="3 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="4 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="5 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="6 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="7 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="8 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="9 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="10 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
-                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="11 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="00:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="01:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="02:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="03:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="04:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="05:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="06:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="07:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="08:00 " android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="09:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="10:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="11:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="12:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="13:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="14:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="15:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="16:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="17:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="18:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="19:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="20:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="21:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="22:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
+                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="23:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
             </LinearLayout>
 
             <!-- Вертикальная линия-разделитель -->
