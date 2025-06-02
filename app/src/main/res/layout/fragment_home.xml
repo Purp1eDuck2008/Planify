@@ -6,92 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- Шапка с днями недели -->
+    <!-- Шапка с датой и навигацией -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:elevation="4dp">
+        android:background="#6A0DAD"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp">
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
+        <!-- Кнопка предыдущего дня -->
+        <ImageButton
+            android:id="@+id/btn_prev_day"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_left"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+        <!-- Текущая дата -->
+        <TextView
+            android:id="@+id/tv_current_date"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
-            <LinearLayout
-                android:id="@+id/days_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <!-- Кнопки дней недели -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_monday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Пн"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_tuesday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Вт"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_wednesday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Ср"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_thursday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Чт"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_friday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Пт"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_saturday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Сб"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_sunday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Вс"
-                    app:cornerRadius="16dp"/>
-            </LinearLayout>
-        </HorizontalScrollView>
+        <!-- Кнопка следующего дня -->
+        <ImageButton
+            android:id="@+id/btn_next_day"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_right"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
     </LinearLayout>
 
-    <!-- Основная область с таймлайном -->
 
+    <!-- Основная область с таймлайном -->
     <ScrollView
         android:id="@+id/timeline_scrollview"
         android:layout_width="match_parent"
@@ -109,45 +65,44 @@
                 android:layout_width="60dp"
                 android:layout_height="1440dp"
                 android:layout_alignParentStart="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="#E6D6FF">
 
                 <!-- Полная часовая разметка -->
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="00:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="01:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="02:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="03:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="04:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="05:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="06:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="07:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="08:00 " android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="09:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="10:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="11:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="12:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="13:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="14:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="15:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="16:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="17:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="18:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="19:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="20:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="21:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="22:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
-                <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="23:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="12 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="1 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="2 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="3 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="4 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="5 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="6 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="7 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="8 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="9 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="10 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="11 AM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="12 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="1 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="2 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="3 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="4 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="5 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="6 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="7 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="8 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="9 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="10 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
+                <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="11 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
             </LinearLayout>
 
-            <!-- Вертикальная линия-разделитель -->
+            <!-- Фоновые линии часов -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1440dp"
+                android:orientation="vertical"
+                android:background="@drawable/hour_lines"/>
 
-
-                <!-- Фоновые линии часов -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1440dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/hour_lines"/>
-
+            <!-- Контейнер для задач -->
             <FrameLayout
                 android:id="@+id/tasks_container"
                 android:layout_width="match_parent"

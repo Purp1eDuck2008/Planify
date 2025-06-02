@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private Calendar selectedDate = Calendar.getInstance();
     private boolean isMenuShowing = false;
+    private View dimView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,19 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Создаем View для затемнения фона
+        dimView = new View(this);
+        dimView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        dimView.setBackgroundColor(Color.argb(150, 0, 0, 0));
+        dimView.setVisibility(View.GONE);
+        dimView.setOnClickListener(v -> dismissMenuPanel());
+
+        // Добавляем затемнение в корневой layout
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView();
+        rootView.addView(dimView);
 
         // Инициализация фрагментов
         homeFragment = new HomeFragment();
@@ -94,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
         popupWindow.setOutsideTouchable(true);
         popupWindow.setAnimationStyle(R.style.PopupAnimation);
 
+        // Обработчик закрытия меню
+        popupWindow.setOnDismissListener(() -> {
+            dimView.setVisibility(View.GONE);
+            isMenuShowing = false;
+        });
+
         // Находим элементы
         CalendarView calendarView = popupView.findViewById(R.id.calendarView);
         LinearLayout buttonsContainer = popupView.findViewById(R.id.additional_buttons_container);
@@ -107,9 +127,8 @@ public class MainActivity extends AppCompatActivity {
             dismissMenuPanel();
         });
 
-        // Затемнение фона
-        View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
-        rootView.setAlpha(0.7f);
+        // Показываем затемнение
+        dimView.setVisibility(View.VISIBLE);
 
         // Показываем меню слева
         popupWindow.showAtLocation(
@@ -125,13 +144,18 @@ public class MainActivity extends AppCompatActivity {
     private void dismissMenuPanel() {
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
-
-            // Восстанавливаем прозрачность фона
-            View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
-            rootView.setAlpha(1f);
-
-            isMenuShowing = false;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Удаляем затемнение при уничтожении активности
+        if (dimView != null) {
+            ViewGroup rootView = (ViewGroup) getWindow().getDecorView();
+            rootView.removeView(dimView);
+        }
+        dismissMenuPanel();
+        super.onDestroy();
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -154,11 +178,5 @@ public class MainActivity extends AppCompatActivity {
 
     public HomeFragment getHomeFragment() {
         return homeFragment;
-    }
-
-    @Override
-    protected void onDestroy() {
-        dismissMenuPanel();
-        super.onDestroy();
     }
 }
