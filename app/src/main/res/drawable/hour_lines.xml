@@ -192,11 +192,5 @@
         </shape>
     </item>
 
-    <!-- Последняя линия внизу (24:00) -->
-    <item android:top="1439dp">
-        <shape android:shape="rectangle">
-            <stroke android:width="0.5dp" android:color="@color/black"/>
-            <size android:height="1dp"/>
-        </shape>
-    </item>
+
 </layer-list>

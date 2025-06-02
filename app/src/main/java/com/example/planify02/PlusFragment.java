@@ -47,6 +47,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+
+
+
 public class PlusFragment extends Fragment {
 
     private AppDatabase db;
@@ -282,7 +285,6 @@ public class PlusFragment extends Fragment {
                             cancelNotification(task.getId());
                             requireActivity().runOnUiThread(() -> {
                                 tasksContainer.removeView(cardView);
-                                showToast("Задача удалена");
                                 updateHomeFragment();
                                 loadTasksFromDatabase();
                             });
@@ -353,7 +355,6 @@ public class PlusFragment extends Fragment {
                         db.planItemDao().delete(existingTask);
                         cancelNotification(existingTask.getId());
                         requireActivity().runOnUiThread(() -> {
-                            showToast("Задача удалена");
                             loadTasksFromDatabase();
                             updateHomeFragment();
                         });

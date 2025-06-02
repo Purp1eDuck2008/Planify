@@ -38,11 +38,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:gravity="end"
+                android:gravity="end|center_vertical"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
+                android:text=" "
+                app:icon="@drawable/ic_delete"
+                app:iconGravity="textEnd"
+                app:iconPadding="0dp" />
 
-                app:icon="@drawable/ic_delete" />
         </LinearLayout>
 
         <!-- Дата и время -->

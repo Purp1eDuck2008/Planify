@@ -33,14 +33,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Применяем динамические цвета Material You
         DynamicColors.applyToActivityIfAvailable(this);
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
 
-        // Создаем View для затемнения фона
+
+        int statusBarHeight = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+
+        binding.getRoot().setPadding(
+                binding.getRoot().getPaddingLeft(),
+                binding.getRoot().getPaddingTop() + statusBarHeight,
+                binding.getRoot().getPaddingRight(),
+                binding.getRoot().getPaddingBottom()
+        );
+
         dimView = new View(this);
         dimView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -49,15 +64,12 @@ public class MainActivity extends AppCompatActivity {
         dimView.setVisibility(View.GONE);
         dimView.setOnClickListener(v -> dismissMenuPanel());
 
-        // Добавляем затемнение в корневой layout
         ViewGroup rootView = (ViewGroup) getWindow().getDecorView();
         rootView.addView(dimView);
 
-        // Инициализация фрагментов
         homeFragment = new HomeFragment();
         plusFragment = new PlusFragment();
 
-        // Настройка нижней навигации
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.home) {
@@ -69,15 +81,10 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
-        // Настройка кнопки меню
         binding.buttonMenu.setOnClickListener(v -> toggleMenuPanel());
-
-        // Показываем стартовый фрагмент
         replaceFragment(homeFragment, "home_fragment");
     }
 
-    // Остальные методы класса остаются без изменений
     private void toggleMenuPanel() {
         if (isMenuShowing) {
             dismissMenuPanel();
@@ -86,56 +93,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void showMenuPanel() {
         if (popupWindow != null && popupWindow.isShowing()) {
             return;
         }
-
-        // Создаем view для меню
         View popupView = LayoutInflater.from(this).inflate(R.layout.menu_panel, null);
-
-        // Вычисляем ширину экрана
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
-
-        // Создаем PopupWindow
         popupWindow = new PopupWindow(
                 popupView,
-                (int)(screenWidth * 0.7), // 70% ширины экрана
+                (int)(screenWidth * 0.7),
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 true
         );
-
-        // Настройка внешнего вида
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupWindow.setElevation(16f);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setAnimationStyle(R.style.PopupAnimation);
-
-        // Обработчик закрытия меню
         popupWindow.setOnDismissListener(() -> {
             dimView.setVisibility(View.GONE);
             isMenuShowing = false;
         });
-
-        // Находим элементы
         CalendarView calendarView = popupView.findViewById(R.id.calendarView);
         LinearLayout buttonsContainer = popupView.findViewById(R.id.additional_buttons_container);
 
-        // Устанавливаем текущую дату
         calendarView.setDate(selectedDate.getTimeInMillis(), false, true);
 
-        // Обработчик выбора даты
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             updateHomeFragmentWithDate(year, month, dayOfMonth);
             dismissMenuPanel();
         });
-
-        // Показываем затемнение
         dimView.setVisibility(View.VISIBLE);
-
-        // Показываем меню слева
         popupWindow.showAtLocation(
                 binding.getRoot(),
                 Gravity.START,
@@ -154,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        // Удаляем затемнение при уничтожении активности
         if (dimView != null) {
             ViewGroup rootView = (ViewGroup) getWindow().getDecorView();
             rootView.removeView(dimView);

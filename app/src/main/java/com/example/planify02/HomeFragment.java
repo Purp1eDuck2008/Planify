@@ -128,9 +128,6 @@ public class HomeFragment extends Fragment {
                         }
                     }
                     Log.d(TAG, displayedTasks + " tasks displayed");
-                    if (displayedTasks == 0 && isAdded()) {
-                        Toast.makeText(requireContext(), "Нет задач на выбранную дату", Toast.LENGTH_SHORT).show();
-                    }
                 });
             } catch (Exception e) {
                 Log.e(TAG, "Error loading tasks", e);
@@ -140,23 +137,16 @@ public class HomeFragment extends Fragment {
 
     private boolean isTaskForSelectedDate(PlanItem task, String currentDateStr, int currentDayOfWeek)
             throws ParseException {
-        // Если дата задачи совпадает с выбранной датой - показываем
         if (task.getEventDate().equals(currentDateStr)) {
             return true;
         }
-
-        // Для повторяющихся задач
         if (task.repeatsOnDay(currentDayOfWeek)) {
             Date taskDate = dateFormat.parse(task.getEventDate());
             Date selectedDateObj = selectedDate.getTime();
-
-            // Проверяем, что выбранная дата не раньше даты создания задачи
             if (!selectedDateObj.before(taskDate)) {
-                // Для еженедельных повторений просто проверяем день недели
                 return true;
             }
         }
-
         return false;
     }
 

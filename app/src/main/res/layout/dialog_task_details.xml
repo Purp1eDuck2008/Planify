@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="?android:attr/colorBackground">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp"
-        android:background="?android:attr/colorBackground">
+        android:background="?attr/colorSurface">
 
         <!-- Название -->
         <com.google.android.material.textview.MaterialTextView
@@ -75,8 +75,8 @@
                 android:layout_marginEnd="8dp"
                 android:text="Удалить"
                 android:id="@+id/dialog_delete_button"
-                android:textColor="@color/red"
-                android:backgroundTint="@color/red1"/>
+                android:textColor="@color/white"
+                android:backgroundTint="#a14f50"/>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="0dp"

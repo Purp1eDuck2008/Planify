@@ -9,12 +9,14 @@
         android:id="@+id/task_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"/>
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/task_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:textSize="12sp"/>
 
 </LinearLayout>

@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.google.android.material.button.MaterialButton; // Для кнопки удаления
+import com.google.android.material.button.MaterialButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.planify02.entities.Note;
@@ -12,9 +12,8 @@ import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
     private List<Note> notes;
-    private OnNoteDeleteListener onNoteDeleteListener; // Интерфейс для удаления заметки
+    private OnNoteDeleteListener onNoteDeleteListener;
 
-    // Конструктор с передачей слушателя для удаления
     public NotesAdapter(List<Note> notes, OnNoteDeleteListener onNoteDeleteListener) {
         this.notes = notes;
         this.onNoteDeleteListener = onNoteDeleteListener;
@@ -23,7 +22,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Замените R.layout.note_item на R.layout.item_note
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
         return new NoteViewHolder(view);
     }
@@ -49,27 +47,23 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         return notes.size();
     }
 
-    // Метод для обновления данных в адаптере
     public void setNotes(List<Note> notes) {
         this.notes = notes;
         notifyDataSetChanged();
     }
 
-    // Интерфейс для обработки удаления
     public interface OnNoteDeleteListener {
         void onDelete(Note note);
     }
 
-    // Вьюхолдер для элемента списка
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView title, content;
-        MaterialButton deleteButton;  // Кнопка для удаления заметки
-
+        MaterialButton deleteButton;
         public NoteViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.note_title);
             content = itemView.findViewById(R.id.note_content);
-            deleteButton = itemView.findViewById(R.id.delete_button); // Инициализация кнопки удаления
+            deleteButton = itemView.findViewById(R.id.delete_button);
         }
     }
 }

@@ -6,7 +6,6 @@
     <color name="activic">#f8f8f8</color>
     <color name="inactivic">#a6aece</color>
     <color name="down">#5365ab</color>
-    //цвета для дней недели
     <color name="inacday">#a6aece</color>
     <color name="acday">#2d3c5f</color>
     <color name="acdaytxt">#6684D7</color>
@@ -17,29 +16,23 @@
     <color name="red1">#DD8375</color>
     <color name="quarter_line">#80FFFFFF</color>
     <color name="whitetime">#2d3c5f</color>
-    <color name="primary_text">#DE000000</color> <!-- 87% черного -->
-    <color name="secondary_text">#8A000000</color> <!-- 54% черного -->
-
-    <!-- Цвета задач -->
-    <color name="permanent_task">#DD8375 </color> <!-- Light blue -->
-    <color name="semi_permanent_task">#F2D683</color> <!-- Light green -->
-    <color name="variable_task">#4FAC77</color> <!-- Light orange -->
-    <color name="default_task">#F5F5F5</color> <!-- Light gray -->
+    <color name="primary_text">#DE000000</color>
+    <color name="secondary_text">#8A000000</color>
+    <color name="permanent_task">#c14a34 </color>
+    <color name="semi_permanent_task">#f1c33d</color>
+    <color name="variable_task">#52b37c</color>
+    <color name="default_task">#F5F5F5</color>
     <color name="timeline_background">#F5F0FF</color>
     <color name="hour_marker_background">#E6D6FF</color>
     <color name="hour_text">#6A0DAD</color>
-    <color name="divider_line">#D1B3FF</color>
+    <color name="divider_line">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
-    <!-- Базовые цвета -->
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_100">#FFE0B3FF</color>
     <color name="purple_800">#FF3700B3</color>
-
-    <!-- Семантические имена -->
     <color name="brand_primary">@color/purple_500</color>
     <color name="brand_secondary">@color/teal_200</color>
-    <!-- Material 3 Teal Colors -->
     <color name="teal_50">#E0F2F1</color>
     <color name="teal_100">#B2DFDB</color>
     <color name="teal_200">#80CBC4</color>
@@ -50,7 +43,5 @@
     <color name="teal_700">#00796B</color>
     <color name="teal_800">#00695C</color>
     <color name="teal_900">#004D40</color>
-
-    <!-- Material 3 Colors -->
     <color name="purple_50">#F3E5F5</color>
 </resources>

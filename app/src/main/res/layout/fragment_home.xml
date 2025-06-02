@@ -21,18 +21,19 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_left"
+            android:tint="#8b8b8b"
+            android:translationY="-10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
-
         <!-- Текущая дата -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_current_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="16sp"
+            android:translationY="-10dp"
             android:textStyle="bold"/>
 
         <!-- Кнопка следующего дня -->
@@ -40,9 +41,10 @@
             android:id="@+id/btn_next_day"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:tint="#8b8b8b"
             android:src="@drawable/ic_arrow_right"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            />
+            android:translationY="-10dp"
+            android:background="?attr/selectableItemBackgroundBorderless" />
     </LinearLayout>
 
 
@@ -51,7 +53,7 @@
         android:id="@+id/timeline_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:fillViewport="true">
 
         <RelativeLayout

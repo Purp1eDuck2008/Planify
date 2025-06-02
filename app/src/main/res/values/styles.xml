@@ -1,9 +1,6 @@
 <resources>
-    <!-- Основной стиль приложения -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Установим цвет фона для приложения -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <!-- Прозрачный статус-бар -->
         <item name="android:windowTranslucentStatus">true</item>
 
     </style>
