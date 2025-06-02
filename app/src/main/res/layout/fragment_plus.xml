@@ -15,26 +15,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
             <!-- Кнопка фильтрации -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/filter_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:text="Фильтр"
                 app:icon="@drawable/ic_filter"
-                app:iconGravity="start"
-                app:iconTint="@color/white"
-                android:layout_marginEnd="8dp"/>
+                app:iconGravity="start" />
 
             <!-- Поле поиска -->
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="Поиск задач">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -42,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionSearch"
-                    android:inputType="textNoSuggestions"/>
+                    android:inputType="textNoSuggestions" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 

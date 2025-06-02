@@ -31,16 +31,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         Note note = notes.get(position);
-        holder.title.setText(note.getTitle());
-        holder.content.setText(note.getContent());
+        if (note != null) {
+            holder.title.setText(note.getTitle());
+            holder.content.setText(note.getContent());
 
-        // Обработчик нажатия на кнопку удаления
-        holder.deleteButton.setOnClickListener(v -> {
-            if (onNoteDeleteListener != null) {
-                onNoteDeleteListener.onDelete(note);  // Удаление заметки
-            }
-        });
+            holder.deleteButton.setOnClickListener(v -> {
+                if (onNoteDeleteListener != null) {
+                    onNoteDeleteListener.onDelete(note);
+                }
+            });
+        }
     }
+
 
     @Override
     public int getItemCount() {

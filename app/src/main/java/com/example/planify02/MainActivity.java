@@ -18,6 +18,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.planify02.databinding.ActivityMainBinding;
+import com.google.android.material.color.DynamicColors;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Применяем динамические цвета Material You
+        DynamicColors.applyToActivityIfAvailable(this);
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(homeFragment, "home_fragment");
     }
 
+    // Остальные методы класса остаются без изменений
     private void toggleMenuPanel() {
         if (isMenuShowing) {
             dismissMenuPanel();

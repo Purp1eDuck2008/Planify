@@ -36,7 +36,9 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version" // Если используете Kotlin
-
+    implementation 'com.google.android.material:material:1.1.0-alpha10'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
     // Firebase
     implementation 'com.google.firebase:firebase-auth:22.3.0'
     implementation 'com.google.firebase:firebase-firestore:24.11.0'

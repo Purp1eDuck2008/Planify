@@ -30,4 +30,27 @@
     <color name="hour_text">#6A0DAD</color>
     <color name="divider_line">#D1B3FF</color>
     <color name="red">#FF0000</color>
+    <!-- Базовые цвета -->
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_100">#FFE0B3FF</color>
+    <color name="purple_800">#FF3700B3</color>
+
+    <!-- Семантические имена -->
+    <color name="brand_primary">@color/purple_500</color>
+    <color name="brand_secondary">@color/teal_200</color>
+    <!-- Material 3 Teal Colors -->
+    <color name="teal_50">#E0F2F1</color>
+    <color name="teal_100">#B2DFDB</color>
+    <color name="teal_200">#80CBC4</color>
+    <color name="teal_300">#4DB6AC</color>
+    <color name="teal_400">#26A69A</color>
+    <color name="teal_500">#009688</color>
+    <color name="teal_600">#00897B</color>
+    <color name="teal_700">#00796B</color>
+    <color name="teal_800">#00695C</color>
+    <color name="teal_900">#004D40</color>
+
+    <!-- Material 3 Colors -->
+    <color name="purple_50">#F3E5F5</color>
 </resources>
