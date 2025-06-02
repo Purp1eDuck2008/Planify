@@ -15,10 +15,13 @@ public class PlanItem {
     private String description;
     private String taskType;   // Тип задачи: "Перманентная", "Полуперманентная", "Вариативная"
     private String repeatDays; // Дни повторения через запятую: "1,3,5" (Пн,Ср,Пт)
+    private boolean notificationsEnabled; // Включены ли уведомления
+    private int reminderMinutesBefore; // За сколько минут до начала присылать уведомление
 
     public PlanItem(String title, String eventDate, String startTime,
                     String endTime, String location, String description,
-                    String taskType, String repeatDays) {
+                    String taskType, String repeatDays,
+                    boolean notificationsEnabled, int reminderMinutesBefore) {
         this.title = title;
         this.eventDate = eventDate;
         this.startTime = startTime;
@@ -27,6 +30,8 @@ public class PlanItem {
         this.description = description;
         this.taskType = taskType;
         this.repeatDays = repeatDays;
+        this.notificationsEnabled = notificationsEnabled;
+        this.reminderMinutesBefore = reminderMinutesBefore;
     }
 
     // Геттеры
@@ -66,6 +71,14 @@ public class PlanItem {
         return repeatDays;
     }
 
+    public boolean isNotificationsEnabled() {
+        return notificationsEnabled;
+    }
+
+    public int getReminderMinutesBefore() {
+        return reminderMinutesBefore;
+    }
+
     // Сеттеры
     public void setId(int id) {
         this.id = id;
@@ -101,6 +114,14 @@ public class PlanItem {
 
     public void setRepeatDays(String repeatDays) {
         this.repeatDays = repeatDays;
+    }
+
+    public void setNotificationsEnabled(boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
+    }
+
+    public void setReminderMinutesBefore(int reminderMinutesBefore) {
+        this.reminderMinutesBefore = reminderMinutesBefore;
     }
 
     // Дополнительные методы
@@ -146,8 +167,8 @@ public class PlanItem {
                 ", description='" + description + '\'' +
                 ", taskType='" + taskType + '\'' +
                 ", repeatDays='" + repeatDays + '\'' +
+                ", notificationsEnabled=" + notificationsEnabled +
+                ", reminderMinutesBefore=" + reminderMinutesBefore +
                 '}';
     }
-
-
 }

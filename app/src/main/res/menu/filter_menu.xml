@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/filter_none"
+            android:title="Без фильтра"/>
+        <item
+            android:id="@+id/filter_date_asc"
+            android:title="По дате (↑)"/>
+        <item
+            android:id="@+id/filter_date_desc"
+            android:title="По дате (↓)"/>
+        <item
+            android:id="@+id/filter_permanent"
+            android:title="Неизменные"/>
+        <item
+            android:id="@+id/filter_semi_permanent"
+            android:title="Запланированные"/>
+        <item
+            android:id="@+id/filter_variable"
+            android:title="Эпизодные"/>
+    </group>
+</menu>

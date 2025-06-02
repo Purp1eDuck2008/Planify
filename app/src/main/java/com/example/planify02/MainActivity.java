@@ -1,18 +1,32 @@
 package com.example.planify02;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.example.planify02.databinding.ActivityMainBinding;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-
     private ActivityMainBinding binding;
     private HomeFragment homeFragment;
     private PlusFragment plusFragment;
+    private PopupWindow popupWindow;
+    private Calendar selectedDate = Calendar.getInstance();
+    private boolean isMenuShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,28 +35,103 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Инициализируем фрагменты
+        // Инициализация фрагментов
         homeFragment = new HomeFragment();
         plusFragment = new PlusFragment();
 
+        // Настройка нижней навигации
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-
             if (itemId == R.id.home) {
                 replaceFragment(homeFragment, "home_fragment");
             } else if (itemId == R.id.todo) {
                 replaceFragment(new ToDoFragment());
             } else if (itemId == R.id.plus) {
                 replaceFragment(plusFragment, "plus_fragment");
-            } else {
-                return false;
             }
-
             return true;
         });
 
+        // Настройка кнопки меню
+        binding.buttonMenu.setOnClickListener(v -> toggleMenuPanel());
+
         // Показываем стартовый фрагмент
         replaceFragment(homeFragment, "home_fragment");
+    }
+
+    private void toggleMenuPanel() {
+        if (isMenuShowing) {
+            dismissMenuPanel();
+        } else {
+            showMenuPanel();
+        }
+    }
+
+    private void showMenuPanel() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
+        }
+
+        // Создаем view для меню
+        View popupView = LayoutInflater.from(this).inflate(R.layout.menu_panel, null);
+
+        // Вычисляем ширину экрана
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+
+        // Создаем PopupWindow
+        popupWindow = new PopupWindow(
+                popupView,
+                (int)(screenWidth * 0.7), // 70% ширины экрана
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                true
+        );
+
+        // Настройка внешнего вида
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow.setElevation(16f);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setAnimationStyle(R.style.PopupAnimation);
+
+        // Находим элементы
+        CalendarView calendarView = popupView.findViewById(R.id.calendarView);
+        LinearLayout buttonsContainer = popupView.findViewById(R.id.additional_buttons_container);
+
+        // Устанавливаем текущую дату
+        calendarView.setDate(selectedDate.getTimeInMillis(), false, true);
+
+        // Обработчик выбора даты
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            updateHomeFragmentWithDate(year, month, dayOfMonth);
+            dismissMenuPanel();
+        });
+
+        // Затемнение фона
+        View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+        rootView.setAlpha(0.7f);
+
+        // Показываем меню слева
+        popupWindow.showAtLocation(
+                binding.getRoot(),
+                Gravity.START,
+                0,
+                0
+        );
+
+        isMenuShowing = true;
+    }
+
+    private void dismissMenuPanel() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+
+            // Восстанавливаем прозрачность фона
+            View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+            rootView.setAlpha(1f);
+
+            isMenuShowing = false;
+        }
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -52,30 +141,24 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         fragmentTransaction.replace(R.id.frame_layout, fragment, tag);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
-    // Метод для обновления даты в HomeFragment
     public void updateHomeFragmentWithDate(int year, int month, int dayOfMonth) {
-        if (homeFragment != null && homeFragment.isAdded()) {
+        selectedDate.set(year, month, dayOfMonth);
+        if (homeFragment != null) {
             homeFragment.updateSelectedDateWithCalendar(year, month, dayOfMonth);
-        } else {
-            // Если фрагмент не создан, создаем его
-            homeFragment = new HomeFragment();
-            replaceFragment(homeFragment, "home_fragment");
-
-            // Небольшая задержка для инициализации фрагмента
-            binding.getRoot().post(() -> {
-                homeFragment.updateSelectedDateWithCalendar(year, month, dayOfMonth);
-            });
         }
     }
 
-    // Метод для получения текущего HomeFragment
     public HomeFragment getHomeFragment() {
         return homeFragment;
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismissMenuPanel();
+        super.onDestroy();
     }
 }

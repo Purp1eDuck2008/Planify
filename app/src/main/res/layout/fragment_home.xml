@@ -6,107 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- Шапка с днями недели -->
+    <!-- Шапка с датой и навигацией -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#6A0DAD"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp">
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
+        <!-- Кнопка предыдущего дня -->
+        <ImageButton
+            android:id="@+id/btn_prev_day"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_left"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <!-- Текущая дата -->
+        <TextView
+            android:id="@+id/tv_current_date"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
-            <LinearLayout
-                android:id="@+id/days_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <!-- Кнопки дней недели -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_monday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Пн"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_tuesday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Вт"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_wednesday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Ср"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_thursday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Чт"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_friday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Пт"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_saturday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Сб"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
-                    app:cornerRadius="16dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_sunday"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Вс"
-                    android:textColor="@color/white"
-                    app:strokeColor="@color/white"
-                    app:cornerRadius="16dp"/>
-            </LinearLayout>
-        </HorizontalScrollView>
+        <!-- Кнопка следующего дня -->
+        <ImageButton
+            android:id="@+id/btn_next_day"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_right"
+            android:background="?attr/selectableItemBackgroundBorderless" />
     </LinearLayout>
 
-    <!-- Основная область с таймлайном -->
 
+    <!-- Основная область с таймлайном -->
     <ScrollView
         android:id="@+id/timeline_scrollview"
         android:layout_width="match_parent"
@@ -154,16 +93,14 @@
                 <TextView android:layout_width="match_parent" android:layout_height="60dp" android:text="11 PM" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textColor="#6A0DAD" android:textSize="12sp"/>
             </LinearLayout>
 
-            <!-- Вертикальная линия-разделитель -->
+            <!-- Фоновые линии часов -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1440dp"
+                android:orientation="vertical"
+                android:background="@drawable/hour_lines"/>
 
-
-                <!-- Фоновые линии часов -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1440dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/hour_lines"/>
-
+            <!-- Контейнер для задач -->
             <FrameLayout
                 android:id="@+id/tasks_container"
                 android:layout_width="match_parent"

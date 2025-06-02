@@ -1,15 +1,15 @@
 package com.example.planify02;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,13 +35,12 @@ public class HomeFragment extends Fragment {
     private AppDatabase db;
     private PlanItemDao planItemDao;
     private FrameLayout tasksContainer;
-    private MaterialButton[] dayButtons;
     private Calendar selectedDate = Calendar.getInstance();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", new Locale("ru"));
     private SimpleDateFormat timeDisplayFormat = new SimpleDateFormat("h:mma", Locale.US);
 
-
-
+    private TextView tvCurrentDate;
+    private ImageButton btnPrevDay, btnNextDay;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -52,61 +51,54 @@ public class HomeFragment extends Fragment {
         planItemDao = db.planItemDao();
 
         tasksContainer = view.findViewById(R.id.tasks_container);
-        setupDayButtons(view);
-        updateDaySelection();
+        btnPrevDay = view.findViewById(R.id.btn_prev_day);
+        btnNextDay = view.findViewById(R.id.btn_next_day);
+        tvCurrentDate = view.findViewById(R.id.tv_current_date);
+
+        setupDateNavigation();
+        updateDateDisplay();
+        loadTasksForSelectedDate();
 
         return view;
+    }
+
+    private void setupDateNavigation() {
+        btnPrevDay.setOnClickListener(v -> {
+            selectedDate.add(Calendar.DAY_OF_MONTH, -1);
+            updateDateDisplay();
+            loadTasksForSelectedDate();
+        });
+
+        btnNextDay.setOnClickListener(v -> {
+            selectedDate.add(Calendar.DAY_OF_MONTH, 1);
+            updateDateDisplay();
+            loadTasksForSelectedDate();
+        });
+    }
+
+
+    private void updateDateDisplay() {
+        tvCurrentDate.setText(dateFormat.format(selectedDate.getTime()));
+    }
+
+    private void showCalendarDialog() {
+        Calendar calendar = Calendar.getInstance();
+        new DatePickerDialog(requireContext(),
+                (view, year, month, dayOfMonth) -> {
+                    selectedDate.set(year, month, dayOfMonth);
+                    updateDateDisplay();
+                    loadTasksForSelectedDate();
+                },
+                selectedDate.get(Calendar.YEAR),
+                selectedDate.get(Calendar.MONTH),
+                selectedDate.get(Calendar.DAY_OF_MONTH))
+                .show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         loadTasksForSelectedDate();
-    }
-
-    private void setupDayButtons(View view) {
-        dayButtons = new MaterialButton[]{
-                view.findViewById(R.id.btn_monday),
-                view.findViewById(R.id.btn_tuesday),
-                view.findViewById(R.id.btn_wednesday),
-                view.findViewById(R.id.btn_thursday),
-                view.findViewById(R.id.btn_friday),
-                view.findViewById(R.id.btn_saturday),
-                view.findViewById(R.id.btn_sunday)
-        };
-
-        for (int i = 0; i < dayButtons.length; i++) {
-            final int dayOfWeek = i + 2;
-            dayButtons[i].setOnClickListener(v -> {
-                updateSelectedDate(dayOfWeek);
-                loadTasksForSelectedDate();
-            });
-        }
-    }
-
-    private void updateSelectedDate(int targetDayOfWeek) {
-        Calendar cal = Calendar.getInstance();
-        int currentDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        int diff = targetDayOfWeek - currentDayOfWeek;
-        if (diff <= 0) diff += 7;
-        cal.add(Calendar.DAY_OF_MONTH, diff);
-        selectedDate = cal;
-        updateDaySelection();
-    }
-
-    private void updateDaySelection() {
-        int currentDayOfWeek = selectedDate.get(Calendar.DAY_OF_WEEK);
-        int buttonIndex = (currentDayOfWeek + 5) % 7;
-
-        for (int i = 0; i < dayButtons.length; i++) {
-            if (i == buttonIndex) {
-                dayButtons[i].setBackgroundColor(getResources().getColor(R.color.white));
-                dayButtons[i].setTextColor(getResources().getColor(R.color.divider_line));
-            } else {
-                dayButtons[i].setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                dayButtons[i].setTextColor(getResources().getColor(R.color.white));
-            }
-        }
     }
 
     public void loadTasksForSelectedDate() {
@@ -180,19 +172,15 @@ public class HomeFragment extends Fragment {
         tvTime.setText(task.getStartTime() + " - " + task.getEndTime());
 
         try {
-            // Конвертируем время в минуты от начала дня
             int startMinutes = parseTimeToMinutes(task.getStartTime());
             int endMinutes = parseTimeToMinutes(task.getEndTime());
             int durationMinutes = endMinutes - startMinutes;
 
-            // Получаем плотность экрана
             float density = getResources().getDisplayMetrics().density;
 
-            // Рассчитываем позицию и высоту в пикселях
             int topMarginPx = (int) (startMinutes * density);
             int heightPx = (int) (durationMinutes * density);
 
-            // Минимальная высота - 30 минут (для видимости)
             int minHeightPx = (int) (30 * density);
             heightPx = Math.max(heightPx, minHeightPx);
 
@@ -217,15 +205,11 @@ public class HomeFragment extends Fragment {
 
     private int parseTimeToMinutes(String timeStr) throws ParseException {
         try {
-            // Нормализуем формат (удаляем пробелы, приводим к верхнему регистру)
             String normalized = timeStr.replaceAll(" ", "").toUpperCase();
-
-            // Разделяем часы и минуты
             String[] parts = normalized.split(":");
             int hours = Integer.parseInt(parts[0]);
             int minutes = Integer.parseInt(parts[1].substring(0, 2));
 
-            // Обрабатываем AM/PM
             if (parts[1].endsWith("PM") && hours != 12) {
                 hours += 12;
             } else if (parts[1].endsWith("AM") && hours == 12) {
@@ -248,6 +232,7 @@ public class HomeFragment extends Fragment {
             default: return getResources().getColor(R.color.default_task);
         }
     }
+
     private void showTaskDetailsDialog(PlanItem task) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.AppDialogTheme);
         builder.setTitle("Детали задачи");
@@ -255,7 +240,6 @@ public class HomeFragment extends Fragment {
         View dialogView = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_task_details, null);
 
-        // Находим все элементы
         TextView tvTitle = dialogView.findViewById(R.id.dialog_title);
         TextView tvTime = dialogView.findViewById(R.id.dialog_time);
         TextView tvLocation = dialogView.findViewById(R.id.dialog_location);
@@ -265,7 +249,6 @@ public class HomeFragment extends Fragment {
         Button btnClose = dialogView.findViewById(R.id.dialog_close_button);
         Button btnDelete = dialogView.findViewById(R.id.dialog_delete_button);
 
-        // Заполняем данные
         tvTitle.setText(task.getTitle());
         tvTime.setText(String.format("%s - %s", task.getStartTime(), task.getEndTime()));
         tvLocation.setText(task.getLocation());
@@ -288,7 +271,7 @@ public class HomeFragment extends Fragment {
                             requireActivity().runOnUiThread(() -> {
                                 Toast.makeText(requireContext(), "Задача удалена", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
-                                loadTasksForSelectedDate(); // Обновляем список задач
+                                loadTasksForSelectedDate();
                             });
                         }).start();
                     })
@@ -324,23 +307,8 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateSelectedDateWithCalendar(int year, int month, int dayOfMonth) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month, dayOfMonth);
-        selectedDate = cal;
-
-        // Определяем день недели (1-7, где 1=воскресенье, 2=понедельник и т.д.)
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-
-        // Преобразуем в наш формат (0=понедельник, 6=воскресенье)
-        int buttonIndex = (dayOfWeek + 5) % 7;
-
-        // Выбираем соответствующую кнопку
-        if (buttonIndex >= 0 && buttonIndex < dayButtons.length) {
-            dayButtons[buttonIndex].performClick();
-        }
-
-        updateDaySelection();
+        selectedDate.set(year, month, dayOfMonth);
+        updateDateDisplay();
+        loadTasksForSelectedDate();
     }
-
-
 }

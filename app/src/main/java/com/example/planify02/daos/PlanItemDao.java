@@ -18,7 +18,7 @@ public interface PlanItemDao {
     @Query("SELECT * FROM plan_items WHERE repeatDays LIKE '%' || :day || '%'")
     List<PlanItem> getTasksByDay(int day);
     @Insert
-    void insert(PlanItem planItem);
+    long insert(PlanItem planItem);
 
     @Delete
     void delete(PlanItem planItem);
