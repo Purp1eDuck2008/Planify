@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Основной контейнер -->
+
     <LinearLayout
         android:id="@+id/notes_container"
         android:orientation="vertical"
@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Поле ввода заголовка -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +23,7 @@
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Поле ввода содержания -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +36,7 @@
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Здесь позже можно вставить RecyclerView для списка заметок -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -45,7 +44,6 @@
 
     </LinearLayout>
 
-    <!-- Плавающая кнопка добавления заметки -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_note_button"
         android:layout_width="wrap_content"

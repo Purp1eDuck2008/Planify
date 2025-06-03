@@ -12,7 +12,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Карточка с календарём -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +27,7 @@
                 android:layout_height="270dp"
                 android:background="?android:attr/colorBackground" />
         </com.google.android.material.card.MaterialCardView>
-        <!-- Контейнер для кнопок -->
+
         <LinearLayout
             android:id="@+id/additional_buttons_container"
             android:layout_width="match_parent"

@@ -622,7 +622,7 @@ public class PlusFragment extends Fragment {
                     existingTask.setReminderMinutesBefore(reminderMinutesBefore);
                     db.planItemDao().update(existingTask);
 
-                    // Отменяем старое уведомление и создаем новое, если нужно
+                    
                     cancelNotification(existingTask.getId());
                     if (notificationsEnabled) {
                         scheduleNotification(existingTask.getId(), title, date, startTime, reminderMinutesBefore);

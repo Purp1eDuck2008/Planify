@@ -12,7 +12,7 @@
         android:padding="8dp"
         android:background="?attr/colorSurface">
 
-        <!-- Название -->
+
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textStyle="bold"
             android:id="@+id/dialog_title"/>
 
-        <!-- Время -->
+
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:textSize="16sp"
             android:id="@+id/dialog_time"/>
 
-        <!-- Место -->
+
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:textSize="16sp"
             android:id="@+id/dialog_location"/>
 
-        <!-- Описание -->
+
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:textSize="16sp"
             android:id="@+id/dialog_description"/>
 
-        <!-- Тип задачи -->
+
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,6 @@
             android:textSize="16sp"
             android:id="@+id/dialog_task_type"/>
 
-        <!-- Дни повторения -->
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +59,7 @@
             android:textSize="16sp"
             android:id="@+id/dialog_repeat_days"/>
 
-        <!-- Кнопки действий -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

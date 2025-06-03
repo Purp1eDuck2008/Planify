@@ -8,15 +8,15 @@ public class PlanItem {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private String eventDate;  // Формат: "8 мая 2025"
-    private String startTime;  // Формат: "8:00AM" - используется для сортировки
-    private String endTime;    // Формат: "2:00PM"
+    private String eventDate;
+    private String startTime;
+    private String endTime;
     private String location;
     private String description;
-    private String taskType;   // Тип задачи: "Перманентная", "Полуперманентная", "Вариативная"
-    private String repeatDays; // Дни повторения через запятую: "1,3,5" (Пн,Ср,Пт)
-    private boolean notificationsEnabled; // Включены ли уведомления
-    private int reminderMinutesBefore; // За сколько минут до начала присылать уведомление
+    private String taskType;
+    private String repeatDays;
+    private boolean notificationsEnabled;
+    private int reminderMinutesBefore;
 
     public PlanItem(String title, String eventDate, String startTime,
                     String endTime, String location, String description,
@@ -34,7 +34,7 @@ public class PlanItem {
         this.reminderMinutesBefore = reminderMinutesBefore;
     }
 
-    // Геттеры
+
     public int getId() {
         return id;
     }
@@ -124,7 +124,6 @@ public class PlanItem {
         this.reminderMinutesBefore = reminderMinutesBefore;
     }
 
-    // Дополнительные методы
     public String getFullStartDateTime() {
         return String.format("%s %s", eventDate, startTime);
     }
@@ -137,11 +136,7 @@ public class PlanItem {
         return String.format("%s - %s", startTime, endTime);
     }
 
-    /**
-     * Проверяет, повторяется ли задача в указанный день недели
-     * @param dayNumber номер дня недели (1-7)
-     * @return true если задача повторяется в этот день
-     */
+
     public boolean repeatsOnDay(int dayNumber) {
         if (repeatDays == null || repeatDays.isEmpty()) {
             return false;

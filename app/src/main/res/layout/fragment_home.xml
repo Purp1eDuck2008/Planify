@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- Шапка с датой и навигацией -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -15,7 +15,6 @@
         android:orientation="horizontal"
         android:paddingHorizontal="8dp">
 
-        <!-- Кнопка предыдущего дня -->
         <ImageButton
             android:id="@+id/btn_prev_day"
             android:layout_width="48dp"
@@ -25,7 +24,7 @@
             android:translationY="-10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
-        <!-- Текущая дата -->
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_current_date"
             android:layout_width="0dp"
@@ -36,7 +35,7 @@
             android:translationY="-10dp"
             android:textStyle="bold"/>
 
-        <!-- Кнопка следующего дня -->
+
         <ImageButton
             android:id="@+id/btn_next_day"
             android:layout_width="48dp"
@@ -48,7 +47,7 @@
     </LinearLayout>
 
 
-    <!-- Основная область с таймлайном -->
+
     <ScrollView
         android:id="@+id/timeline_scrollview"
         android:layout_width="match_parent"
@@ -60,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Колонка с часами -->
+
             <LinearLayout
                 android:id="@+id/hour_markers"
                 android:layout_width="60dp"
@@ -68,7 +67,7 @@
                 android:layout_alignParentStart="true"
                 android:orientation="vertical">
 
-                <!-- Полная часовая разметка -->
+
                 <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="00:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
                 <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="01:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
                 <com.google.android.material.textview.MaterialTextView android:layout_width="match_parent" android:layout_height="60dp" android:text="02:00" android:gravity="center_vertical|start" android:paddingLeft="8dp" android:textSize="12sp"/>
@@ -95,14 +94,14 @@
                 <com.google.android.material.textview.MaterialTextView  android:layout_width="match_parent" android:layout_height="60dp" android:text="23:00" android:gravity="center_vertical|start" android:paddingLeft="8dp"  android:textSize="12sp"/>
             </LinearLayout>
 
-            <!-- Фоновые линии часов -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1440dp"
                 android:orientation="vertical"
                 android:background="@drawable/hour_lines"/>
 
-            <!-- Контейнер для задач -->
+
             <FrameLayout
                 android:id="@+id/tasks_container"
                 android:layout_width="match_parent"

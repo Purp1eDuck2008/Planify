@@ -16,7 +16,7 @@ public interface NoteDao {
     void insert(Note note);
 
     @Delete
-    void delete(Note note); // Метод для удаления заметки
+    void delete(Note note);
 
     @Query("SELECT * FROM notes ORDER BY createdAt DESC")
     LiveData<List<Note>> getAllNotes();
