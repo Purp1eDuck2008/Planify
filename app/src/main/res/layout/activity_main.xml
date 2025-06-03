@@ -29,6 +29,7 @@
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:tint="@color/white"
+        app:iconSize="25dp"
         app:icon="@drawable/profile_icon"
         app:iconGravity="textStart"
         app:backgroundTint="@android:color/transparent"
@@ -38,19 +39,20 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonMenu"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:gravity="start|center_vertical"
         android:minWidth="36dp"
         android:minHeight="48dp"
-        android:gravity="start|center_vertical"
         android:tint="@color/white"
-        app:icon="@drawable/ic_mainmenu"
-        app:iconGravity="textStart"
         app:backgroundTint="@android:color/transparent"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:icon="@drawable/reshot_icon_calendar_number_w85xu64mp9"
+        app:iconGravity="textStart"
+        app:iconSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/frame_layout"
