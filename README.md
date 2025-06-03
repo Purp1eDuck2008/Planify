@@ -18,9 +18,15 @@
 - Firestore (опционально — в будущем)
 
 ## 📱 Скриншоты:
-![Screenshot_2025-06-03-05-33-14-636_com example planify02](https://github.com/user-attachments/assets/3bb0718a-f970-4884-a809-1bec7a885427)
-![Screenshot_2025-06-03-05-33-19-028_com example planify02](https://github.com/user-attachments/assets/c7d214c3-2f2a-4e3b-8bd8-204333383854)
-![Screenshot_2025-06-03-06-22-55-339_com example planify02](https://github.com/user-attachments/assets/5143a49a-ee5b-41d2-bec1-95d491da2e76)
+
+<img src="https://github.com/user-attachments/assets/3bb0718a-f970-4884-a809-1bec7a885427" width="300"/>
+<br/>
+
+<img src="https://github.com/user-attachments/assets/c7d214c3-2f2a-4e3b-8bd8-204333383854" width="300"/>
+<br/>
+
+<img src="https://github.com/user-attachments/assets/5143a49a-ee5b-41d2-bec1-95d491da2e76" width="300"/>
+
 
 
 
