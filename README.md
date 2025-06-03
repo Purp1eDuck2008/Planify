@@ -20,7 +20,7 @@
 
 ## 📱 Скриншоты:
 
-<table>
+<table cellspacing="10">
   <tr>
     <td><img src="https://github.com/user-attachments/assets/3bb0718a-f970-4884-a809-1bec7a885427" width="200"/></td>
     <td><img src="https://github.com/user-attachments/assets/c7d214c3-2f2a-4e3b-8bd8-204333383854" width="200"/></td>
